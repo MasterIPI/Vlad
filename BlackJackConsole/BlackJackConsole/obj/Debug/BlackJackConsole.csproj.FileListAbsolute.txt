@@ -1,0 +1,9 @@
+c:\users\iwinn\documents\visual studio 2015\Projects\BlackJackConsole\BlackJackConsole\bin\Debug\BlackJackConsole.exe.config
+c:\users\iwinn\documents\visual studio 2015\Projects\BlackJackConsole\BlackJackConsole\bin\Debug\BlackJackConsole.exe
+c:\users\iwinn\documents\visual studio 2015\Projects\BlackJackConsole\BlackJackConsole\bin\Debug\BlackJackConsole.pdb
+c:\users\iwinn\documents\visual studio 2015\Projects\BlackJackConsole\BlackJackConsole\obj\Debug\BlackJackConsole.csprojResolveAssemblyReference.cache
+c:\users\iwinn\documents\visual studio 2015\Projects\BlackJackConsole\BlackJackConsole\obj\Debug\BlackJackConsole.exe
+c:\users\iwinn\documents\visual studio 2015\Projects\BlackJackConsole\BlackJackConsole\obj\Debug\BlackJackConsole.pdb
+C:\Users\iwinn\Source\Repos\Vlad\BlackJackConsole\BlackJackConsole\bin\Debug\BlackJackConsole.exe.config
+C:\Users\iwinn\Source\Repos\Vlad\BlackJackConsole\BlackJackConsole\obj\Debug\BlackJackConsole.exe
+C:\Users\iwinn\Source\Repos\Vlad\BlackJackConsole\BlackJackConsole\obj\Debug\BlackJackConsole.pdb
