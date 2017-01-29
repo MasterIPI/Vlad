@@ -16,17 +16,6 @@ namespace BlackJackConsole
             _deck = _deck.OrderBy(x => r.NextDouble()).ToArray();
         }
 
-        public override string ToString()
-        {
-            string tmp = string.Empty;
-
-            foreach (Card card in _deck)
-            {
-                tmp += card.ToString() + "\n";
-            }
-            return tmp;
-        }
-
         public Card[] PopCards(int count)
         {
             Card[] tmp = _deck.Take(count).ToArray();
@@ -37,75 +26,36 @@ namespace BlackJackConsole
 
         public void CreateDeck()
         {
-            int card = 2;
-            int suit = 0;
+            int card = (int)CardNames.Two;
+            int suit = (int)Suits.Spades;
 
             for (int i = 0; i < _deck.Length; i++)
             {
-                if (card <= 10)
+                if (card <= (int)CardNames.Ten)
                 {
-                    _deck[i] = new Card(card.ToString(), GetSuit(suit), card);
-                    card++;
+                    _deck[i] = new Card(card, suit, card);
                 }
 
-                else if (card > 10)
+                if (card > (int)CardNames.Ten)
                 {
-                    switch (card)
-                    {
-                        case 11:
-                            _deck[i] = new Card("J", GetSuit(suit), 10);
-                            card++;
-                            break;
-
-                        case 12:
-                            _deck[i] = new Card("Q", GetSuit(suit), 10);
-                            card++;
-                            break;
-
-                        case 13:
-                            _deck[i] = new Card("K", GetSuit(suit), 10);
-                            card++;
-                            break;
-
-                        case 14:
-                            _deck[i] = new Card("A", GetSuit(suit), 11);
-                            card = 2;
-                            suit++;
-                            break;
-                    }
+                    _deck[i] = new Card(card, suit, (int)CardNames.Ten);
                 }
+
+                if (card == (int)CardNames.A)
+                {
+                    _deck[i] = new Card(card, suit, (int)CardNames.J);
+                    card = 2;
+                    suit++;
+                    continue;
+                }
+
+                card++;
             }
-        }
-
-        private char GetSuit(int suit)
-        {
-            char _suit = ' ';
-
-            switch (suit)
-            {
-                case (int)Suits.Clubs:
-                    _suit = '\u2663';
-                    break;
-
-                case (int)Suits.Diamonds:
-                    _suit = '\u2666';
-                    break;
-
-                case (int)Suits.Hearts:
-                    _suit = '\u2665';
-                    break;
-
-                case (int)Suits.Spades:
-                    _suit = '\u2660';
-                    break;
-            }
-
-            return _suit;
         }
 
         public Deck()
         {
-            _deck = new Card[52]; //Deck capacity
+            _deck = new Card[Enum.GetNames(typeof(Suits)).Length * Enum.GetNames(typeof(CardNames)).Length];
             CreateDeck();
         }
     }

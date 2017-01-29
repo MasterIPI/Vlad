@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using static BlackJackConsole.ConsoleWorks;
 
 namespace BlackJackConsole
 {
@@ -12,29 +12,11 @@ namespace BlackJackConsole
         {
             Console.OutputEncoding = Encoding.UTF8;
 
-            int playerNum = 0;
-
-            while (true)
-            {
-                Console.WriteLine("Write number of players");
-                Int32.TryParse(Console.ReadLine(), out playerNum);
-
-                if (playerNum != 0 && playerNum < 6)
-                {
-                    Console.WriteLine($"Number of players = {playerNum}");
-                    playerNum++;
-                    break;
-                }
-            }
-
-            PlayGame(playerNum);
-            Console.ReadKey();
+            PlayGame(GetNumPlayers());
         }
 
         static void PlayGame(int playerNum)
         {
-            Console.Clear();
-
             string answer = string.Empty;
             int bet = 0;
 
@@ -58,7 +40,8 @@ namespace BlackJackConsole
                     while (true)
                     {
                         Console.Clear();
-                        Console.WriteLine($"{players[i].Name}, your balance = {players[i].Balance} how much would you bet?");
+                        ShowPlayer(players[i]);
+                        Console.WriteLine("How much would you bet?");
                         Int32.TryParse(Console.ReadLine(), out bet);
 
                         if (bet != 0 && bet <= players[i].Balance)
@@ -67,7 +50,7 @@ namespace BlackJackConsole
                             current.Bet = bet;
                             current.Balance = current.Balance - bet;
                             players[i] = current;
-                            players[i].GetHand.AddRange(deck.PopCards(2));
+                            players[i].Hand.AddRange(deck.PopCards(2));
                             break;
                         }
                     }
@@ -75,27 +58,19 @@ namespace BlackJackConsole
 
                 else
                 {
-                    players[i].GetHand.AddRange(deck.PopCards(2));
+                    players[i].Hand.AddRange(deck.PopCards(2));
                 }
             }
 
-            ShowCards(players);
+            ShowAllCards(players);
             PlayHand(players, deck);
             GetWinner(players);
-        }
-
-        static void ShowCards(List<Player> players)
-        {
-            Console.Clear();
-            foreach (Player player in players)
-            {
-                player.ShowHand();
-            }
+            Console.ReadKey();
         }
 
         static void GetWinner(List<Player> players)
         {
-            ShowCards(players);
+            ShowAllCards(players);
 
             int[] values = new int[players.Count];
 
@@ -108,47 +83,50 @@ namespace BlackJackConsole
             {
                 if (values[i] > 21)
                 {
-                    if (i != 0)
-                    {
-                        Player current = players[i];
-                        current.Bet = 0;
-                        players[i] = current;
-                    }
-                    Console.WriteLine($"{players[i].Name} lost");
+                    Player current = players[i];
+                    current.Bet = 0;
+                    players[i] = current;
+                    PrintPlayerPlayerStatus(players[i], PlayerStatus.Loose);
                 }
 
-                else if (values[i] == 21)
+                if (values[i] == 21)
                 {
-                    if (i != 0)
-                    {
-                        Player current = players[i];
-                        current.Balance += current.Bet * 2;
-                        current.Bet = 0;
-                        players[i] = current;
-                    }
-                    Console.WriteLine($"{players[i].Name} Blackjack");
+                    Player current = players[i];
+                    current.Balance += current.Bet * 2;
+                    current.Bet = 0;
+                    players[i] = current;
+                    PrintPlayerPlayerStatus(players[i], PlayerStatus.BlackJack);
                 }
 
-                else if (values[i] == values[0])
+                if (values[i] == values[0])
                 {
-                    if (i != 0)
-                    {
-                        Player current = players[i];
-                        current.Balance += current.Bet;
-                        current.Bet = 0;
-                        players[i] = current;
-                    }
-                    Console.WriteLine($"Draw {players[i].Name} -> {players[0].Name}");
+                    Player current = players[i];
+                    current.Balance += current.Bet;
+                    current.Bet = 0;
+                    players[i] = current;
+                    PrintPlayerPlayerStatus(players[i], PlayerStatus.Draw);
+                }
+
+                if ((values[i] > values[0]) && (values[i] < 21) && (values[0] < 21))
+                {
+                    Player current = players[i];
+                    current.Balance += current.Bet * 2;
+                    current.Bet = 0;
+                    players[i] = current;
+                    PrintPlayerPlayerStatus(players[i], PlayerStatus.Win);
+                }
+
+                if ((values[i] < values[0]) && (values[0] > 21) && (values[i] < 21))
+                {
+                    Player current = players[i];
+                    current.Balance += current.Bet * 2;
+                    current.Bet = 0;
+                    players[i] = current;
+                    PrintPlayerPlayerStatus(players[i], PlayerStatus.Win);
                 }
             }
 
-            foreach (Player player in players)
-            {
-                if (player.Name != "Dealer")
-                {
-                    Console.WriteLine($"Player {player.Name}, balance = {player.Balance}");
-                }
-            }
+            ShowAllPlayers(players);
         }
 
         static void PlayHand(List<Player> players, Deck deck)
@@ -166,18 +144,18 @@ namespace BlackJackConsole
                     {
                         if (playersHandValue < 21)
                         {
-                            ShowCards(players);
+                            ShowAllCards(players);
                             Console.WriteLine($"{player.Name}, do you want to pick a card? (y/n)");
                             answer = Console.ReadLine();
 
                             if (answer == "y")
                             {
-                                player.GetHand.AddRange(deck.PopCards(1));
-                                player.ShowHand();
+                                player.Hand.AddRange(deck.PopCards(1));
+                                ShowPlayersHand(player);
                                 playersHandValue = player.GetHandValue();
                             }
 
-                            else if (answer == "n")
+                            if (answer == "n")
                             {
                                 break;
                             }
@@ -188,12 +166,12 @@ namespace BlackJackConsole
                             }
                         }
 
-                        else if (playersHandValue == 21)
+                        if (playersHandValue == 21)
                         {
                             break;
                         }
 
-                        else if (playersHandValue > 21)
+                        if (playersHandValue > 21)
                         {
                             break;
                         }
@@ -206,7 +184,7 @@ namespace BlackJackConsole
                     {
                         if (playersHandValue < 21 && playersHandValue < 17)
                         {
-                            player.GetHand.AddRange(deck.PopCards(1));
+                            player.Hand.AddRange(deck.PopCards(1));
                             playersHandValue = player.GetHandValue();
                         }
 

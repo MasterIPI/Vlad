@@ -8,36 +8,14 @@ namespace BlackJackConsole
 {
     struct Card
     {
-        private string _name;
-        private char _suit;
-        private int _value;
+        public CardNames Name { get; set; }
+        public Suits Suit { get; set; }
 
-        public Card(string name, char suit, int val)
+        public Card(int name, int suit, int val)
         {
-            _name = name;
-            _suit = suit;
-            _value = val;
-        }
-
-        public int Value
-        {
-            get { return _value; }
-        }
-
-        public string Name
-        {
-            get { return _name; }
-        }
-
-        public void ShowCard()
-        {
-            Console.WriteLine(ToString());
-        }
-
-        public override string ToString()
-        {
-            return string.Format($"{_name}{_suit}");
+            Name = (CardNames)name;
+            Suit = (Suits)suit;
         }
     }
-    enum Suits { Spades, Clubs, Hearts, Diamonds};
+
 }

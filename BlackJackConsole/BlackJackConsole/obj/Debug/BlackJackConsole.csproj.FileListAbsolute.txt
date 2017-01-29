@@ -7,3 +7,6 @@ c:\users\iwinn\documents\visual studio 2015\Projects\BlackJackConsole\BlackJackC
 C:\Users\iwinn\Source\Repos\Vlad\BlackJackConsole\BlackJackConsole\bin\Debug\BlackJackConsole.exe.config
 C:\Users\iwinn\Source\Repos\Vlad\BlackJackConsole\BlackJackConsole\obj\Debug\BlackJackConsole.exe
 C:\Users\iwinn\Source\Repos\Vlad\BlackJackConsole\BlackJackConsole\obj\Debug\BlackJackConsole.pdb
+C:\Users\iwinn\Source\Repos\Vlad\BlackJackConsole\BlackJackConsole\bin\Debug\BlackJackConsole.exe
+C:\Users\iwinn\Source\Repos\Vlad\BlackJackConsole\BlackJackConsole\bin\Debug\BlackJackConsole.pdb
+C:\Users\iwinn\Source\Repos\Vlad\BlackJackConsole\BlackJackConsole\obj\Debug\BlackJackConsole.csprojResolveAssemblyReference.cache

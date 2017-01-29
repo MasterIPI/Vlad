@@ -8,71 +8,35 @@ namespace BlackJackConsole
 {
     struct Player
     {
-        private int _balance;
-        private int _bet;
-        private string _name;
-        private List<Card> _hand;
-
-        public List<Card> GetHand
-        {
-            get { return _hand; }
-        }
-
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
-
-        public int Balance
-        {
-            get { return _balance; }
-            set { _balance = value; }
-        }
-
-        public int Bet
-        {
-            get { return _bet; }
-            set { _bet = value; }
-        }
-
-        public void ShowHand()
-        {
-            if (_name != "Dealer")
-            {
-                Console.WriteLine($"Player {_name}, balance = {_balance}:");
-                foreach (Card card in _hand)
-                {
-                    card.ShowCard();
-                }
-                Console.WriteLine($"Hand value: {GetHandValue()}");
-                Console.WriteLine($"Your bet is {_bet}");
-                Console.WriteLine(new string('=', 10));
-            }
-
-            else
-            {
-                Console.WriteLine($"{_name}:");
-                foreach (Card card in _hand)
-                {
-                    card.ShowCard();
-                }
-                Console.WriteLine($"Hand value: {GetHandValue()}");
-                Console.WriteLine(new string('=', 10));
-            }
-        }
+        public int Balance { get; set; }
+        public int Bet { get; set; }
+        public string Name { get; set; }
+        public List<Card> Hand { get; set; }
 
         public int GetHandValue()
         {
             int sum = 0;
-            foreach (Card card in _hand)
+            foreach (Card card in Hand)
             {
-                sum += card.Value;
+                if ((int)card.Name <= (int)CardNames.Ten)
+                {
+                    sum += (int)card.Name;
+                }
+
+                if ((int)card.Name > (int)CardNames.Ten)
+                {
+                    sum += (int)CardNames.Ten;
+                }
+
+                if (card.Name == CardNames.A)
+                {
+                    sum += 11;
+                }
             }
 
-            foreach (Card card in _hand)
+            foreach (Card card in Hand)
             {
-                if (card.Name == "A" && sum > 21)
+                if (card.Name == CardNames.A && sum > 21)
                 {
                     sum -= 10;
                 }
@@ -81,17 +45,12 @@ namespace BlackJackConsole
             return sum;
         }
 
-        public void ShowPlayer()
-        {
-            Console.WriteLine($"Player {_name}, balance {_balance}:");
-        }
-
         public Player(string name)
         {
-            _name = name;
-            _balance = 100;
-            _bet = 0;
-            _hand = new List<Card>();
+            Name = name;
+            Balance = 100;
+            Bet = 0;
+            Hand = new List<Card>();
         }
     }
 }
