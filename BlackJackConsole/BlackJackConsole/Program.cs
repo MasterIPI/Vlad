@@ -18,46 +18,17 @@ namespace BlackJackConsole
         static void PlayGame(int playerNum)
         {
             string answer = string.Empty;
-            int bet = 0;
 
             Deck deck = new Deck();
             deck.Shuffle();
 
             List<Player> players = new List<Player>(playerNum);
 
-            GetPlayersName(players);
-
-            for (int i = 0; i < players.Count; i++)
-            {
-                if (players[i].Name != "Dealer")
-                {
-                    while (true)
-                    {
-                        Console.Clear();
-                        ShowPlayer(players[i]);
-                        Console.WriteLine("How much would you bet?");
-                        Int32.TryParse(Console.ReadLine(), out bet);
-
-                        if (bet != 0 && bet <= players[i].Balance)
-                        {
-                            Player current = players[i];
-                            current.Bet = bet;
-                            current.Balance = current.Balance - bet;
-                            players[i] = current;
-                            players[i].Hand.AddRange(deck.PopCards(2));
-                            break;
-                        }
-                    }
-                }
-
-                else
-                {
-                    players[i].Hand.AddRange(deck.PopCards(2));
-                }
-            }
+            GetPlayersNames(players);
+            GetPlayersBets(players, ref deck);
 
             ShowAllCards(players);
-            PlayHand(players, deck);
+            PlayHand(players, ref deck);
             GetWinner(players);
             Console.ReadKey();
         }
@@ -123,7 +94,7 @@ namespace BlackJackConsole
             ShowAllPlayers(players);
         }
 
-        static void PlayHand(List<Player> players, Deck deck)
+        static void PlayHand(List<Player> players, ref Deck deck)
         {
             string answer = string.Empty;
             int playersHandValue = 0;

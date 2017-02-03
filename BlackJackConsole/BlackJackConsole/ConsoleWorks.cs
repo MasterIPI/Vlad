@@ -105,7 +105,7 @@ namespace BlackJackConsole
             return playerNum;
         }
 
-        public static void GetPlayersName(List<Player> players)
+        public static void GetPlayersNames(List<Player> players)
         {
             players.Add(new Player("Dealer"));
 
@@ -113,6 +113,40 @@ namespace BlackJackConsole
             {
                 Console.WriteLine($"Write name for player {i}");
                 players.Add(new Player(Console.ReadLine()));
+            }
+        }
+
+        public static void GetPlayersBets(List<Player> players, ref Deck deck)
+        {
+            int bet = 0;
+
+            for (int i = 0; i < players.Count; i++)
+            {
+                if (players[i].Name != "Dealer")
+                {
+                    while (true)
+                    {
+                        Console.Clear();
+                        ShowPlayer(players[i]);
+                        Console.WriteLine("How much would you bet?");
+                        Int32.TryParse(Console.ReadLine(), out bet);
+
+                        if (bet != 0 && bet <= players[i].Balance && bet > 0)
+                        {
+                            Player current = players[i];
+                            current.Bet = bet;
+                            current.Balance = current.Balance - bet;
+                            players[i] = current;
+                            players[i].Hand.AddRange(deck.PopCards(2));
+                            break;
+                        }
+                    }
+                }
+
+                else
+                {
+                    players[i].Hand.AddRange(deck.PopCards(2));
+                }
             }
         }
 
