@@ -105,6 +105,17 @@ namespace BlackJackConsole
             return playerNum;
         }
 
+        public static void GetPlayersName(List<Player> players)
+        {
+            players.Add(new Player("Dealer"));
+
+            for (int i = 1; i < players.Capacity; i++)
+            {
+                Console.WriteLine($"Write name for player {i}");
+                players.Add(new Player(Console.ReadLine()));
+            }
+        }
+
         private static char GetSuit(Card card)
         {
             char _suit = ' ';

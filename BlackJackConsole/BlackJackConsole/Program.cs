@@ -25,13 +25,7 @@ namespace BlackJackConsole
 
             List<Player> players = new List<Player>(playerNum);
 
-            players.Add(new Player("Dealer"));
-
-            for (int i = 1; i < playerNum; i++)
-            {
-                Console.WriteLine($"Write name for player {i}");
-                players.Add(new Player(Console.ReadLine()));
-            }
+            GetPlayersName(players);
 
             for (int i = 0; i < players.Count; i++)
             {
