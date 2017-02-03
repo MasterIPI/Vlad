@@ -26,40 +26,44 @@ namespace BlackJackConsole
 
         public void CreateDeck()
         {
-            int card = (int)CardNames.Two;
-            int suit = (int)Suits.Spades;
-            int value = card;
-
-            for (int i = 0; i < _deck.Capacity; i++)
+            for (int i = 0; i < Enum.GetNames(typeof(Suits)).Length; i++)
             {
-                if (card <= (int)CardNames.Ten)
-                {
-                    _deck.Add(new Card((CardNames)card, (Suits)suit, value));
-                }
+                int card = (int)CardNames.Two;
+                int cardValue = card;
 
-                if (card > (int)CardNames.Ten)
+                for (int j = 0; j < Enum.GetNames(typeof(CardNames)).Length; j++, card++)
                 {
-                    _deck.Add(new Card((CardNames)card, (Suits)suit, (int)CardNames.Ten));
-                }
+                    if (card <= (int)CardNames.Ten)
+                    {
+                        _deck.Add(new Card((CardNames)card, (Suits)i, cardValue));
+                    }
 
-                if (card == (int)CardNames.A)
-                {
-                    _deck.Add(new Card((CardNames)card, (Suits)suit, value));
-                    card = (int)CardNames.Two;
-                    suit++;
-                    value = card;
-                    continue;
-                }
+                    if (card > (int)CardNames.Ten)
+                    {
+                        for (; j < Enum.GetNames(typeof(CardNames)).Length; j++, card++)
+                        {
+                            if (card == (int)CardNames.A)
+                            {
+                                cardValue++;
+                                _deck.Add(new Card((CardNames)card, (Suits)i, cardValue));
+                                break;
+                            }
 
-                card++;
-                value++;
+                            _deck.Add(new Card((CardNames)card, (Suits)i, cardValue));
+                        }
+                    }
+
+                    if (cardValue <= (int)CardNames.Nine)
+                    {
+                        cardValue++;
+                    }
+                }
             }
         }
 
         public Deck()
         {
-            int deckCapacity = Enum.GetNames(typeof(Suits)).Length * Enum.GetNames(typeof(CardNames)).Length;
-            _deck = new List<Card>(deckCapacity);
+            _deck = new List<Card>();
             CreateDeck();
         }
     }
