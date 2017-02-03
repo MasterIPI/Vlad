@@ -18,20 +18,7 @@ namespace BlackJackConsole
             int sum = 0;
             foreach (Card card in Hand)
             {
-                if ((int)card.Name <= (int)CardNames.Ten)
-                {
-                    sum += (int)card.Name;
-                }
-
-                if ((int)card.Name > (int)CardNames.Ten)
-                {
-                    sum += (int)CardNames.Ten;
-                }
-
-                if (card.Name == CardNames.A)
-                {
-                    sum += 11;
-                }
+                sum += card.Value;
             }
 
             foreach (Card card in Hand)
