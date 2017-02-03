@@ -39,7 +39,7 @@ namespace BlackJackConsole
 
                 if (card > (int)CardNames.Ten)
                 {
-                    _deck.Add(new Card((CardNames)card, (Suits)suit, value));
+                    _deck.Add(new Card((CardNames)card, (Suits)suit, (int)CardNames.Ten));
                 }
 
                 if (card == (int)CardNames.A)
