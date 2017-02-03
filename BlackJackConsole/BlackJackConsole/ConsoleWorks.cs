@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlackJackConsole
 {
-    static class ConsoleWorks
+    public static class ConsoleWorks
     {
         public static void ShowPlayer(Player player)
         {
@@ -29,7 +29,7 @@ namespace BlackJackConsole
             }
         }
 
-        public static void PrintPlayerPlayerStatus(Player player, PlayerStatus PlayerStatus)
+        public static void PrintPlayerStatus(Player player, PlayerStatus PlayerStatus)
         {
             if (PlayerStatus == PlayerStatus.Loose)
             {
@@ -86,26 +86,26 @@ namespace BlackJackConsole
             }
         }
 
-        public static int GetNumPlayers()
+        public static int GetHumanPlayersNumber()
         {
-            int playerNum = 0;
+            int humanPlayerNum = 0;
             while (true)
             {
                 Console.WriteLine("Write number of players");
-                Int32.TryParse(Console.ReadLine(), out playerNum);
+                Int32.TryParse(Console.ReadLine(), out humanPlayerNum);
 
-                if (playerNum != 0 && playerNum < 6)
+                if (humanPlayerNum != 0 && humanPlayerNum < 6 && humanPlayerNum > 0)
                 {
-                    playerNum++;
+                    humanPlayerNum++;
                     break;
                 }
             }
 
             Console.Clear();
-            return playerNum;
+            return humanPlayerNum;
         }
 
-        public static void GetPlayersNames(List<Player> players)
+        public static void GetHumanPlayersNames(List<Player> players)
         {
             players.Add(new Player("Dealer"));
 
@@ -116,7 +116,7 @@ namespace BlackJackConsole
             }
         }
 
-        public static void GetPlayersBets(List<Player> players, ref Deck deck)
+        public static void GetHumanPlayersBetsAndHands(List<Player> players, Deck deck)
         {
             int bet = 0;
 

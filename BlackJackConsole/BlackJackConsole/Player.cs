@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlackJackConsole
 {
-    struct Player
+    public struct Player
     {
         public int Balance { get; set; }
         public int Bet { get; set; }

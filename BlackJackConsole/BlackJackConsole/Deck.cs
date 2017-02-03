@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace BlackJackConsole
 {
-    class Deck
+    public class Deck
     {
-        private Card[] _deck;
+        private List<Card> _deck;
 
         public void Shuffle()
         {
             Random r = new Random();
-            _deck = _deck.OrderBy(x => r.NextDouble()).ToArray();
+            _deck = _deck.OrderBy(x => r.NextDouble()).ToList();
         }
 
         public Card[] PopCards(int count)
         {
             Card[] tmp = _deck.Take(count).ToArray();
-            _deck = _deck.Except(tmp).ToArray();
+            _deck = _deck.Except(tmp).ToList();
 
             return tmp;
         }
@@ -28,34 +28,38 @@ namespace BlackJackConsole
         {
             int card = (int)CardNames.Two;
             int suit = (int)Suits.Spades;
+            int value = card;
 
-            for (int i = 0; i < _deck.Length; i++)
+            for (int i = 0; i < _deck.Capacity; i++)
             {
                 if (card <= (int)CardNames.Ten)
                 {
-                    _deck[i] = new Card(card, suit, card);
+                    _deck.Add(new Card((CardNames)card, (Suits)suit, value));
                 }
 
                 if (card > (int)CardNames.Ten)
                 {
-                    _deck[i] = new Card(card, suit, (int)CardNames.Ten);
+                    _deck.Add(new Card((CardNames)card, (Suits)suit, value));
                 }
 
                 if (card == (int)CardNames.A)
                 {
-                    _deck[i] = new Card(card, suit, (int)CardNames.J);
-                    card = 2;
+                    _deck.Add(new Card((CardNames)card, (Suits)suit, value));
+                    card = (int)CardNames.Two;
                     suit++;
+                    value = card;
                     continue;
                 }
 
                 card++;
+                value++;
             }
         }
 
         public Deck()
         {
-            _deck = new Card[Enum.GetNames(typeof(Suits)).Length * Enum.GetNames(typeof(CardNames)).Length];
+            int deckCapacity = Enum.GetNames(typeof(Suits)).Length * Enum.GetNames(typeof(CardNames)).Length;
+            _deck = new List<Card>(deckCapacity);
             CreateDeck();
         }
     }

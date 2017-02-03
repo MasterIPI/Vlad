@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 
 namespace BlackJackConsole
 {
-    struct Card
+    public struct Card
     {
         public CardNames Name { get; set; }
         public Suits Suit { get; set; }
+        public int Value { get; set; }
 
-        public Card(int name, int suit, int val)
+        public Card(CardNames name, Suits suit, int val)
         {
-            Name = (CardNames)name;
-            Suit = (Suits)suit;
+            Name = name;
+            Suit = suit;
+            Value = val;
         }
     }
 
