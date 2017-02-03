@@ -136,8 +136,8 @@ namespace BlackJackConsole
                             Player current = players[i];
                             current.Bet = bet;
                             current.Balance = current.Balance - bet;
+                            current.Hand.AddRange(deck.PopCards(2));
                             players[i] = current;
-                            players[i].Hand.AddRange(deck.PopCards(2));
                             break;
                         }
                     }

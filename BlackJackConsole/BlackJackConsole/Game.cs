@@ -12,8 +12,8 @@ namespace BlackJackConsole
         private Deck _deck;
         private List<Player> _players;
 
-        private const int BlackJackValue = 21;
-        private const int MaxDealersHandValue = 17;
+        private const int blackJackValue = 21;
+        private const int maxDealersHandValue = 17;
 
 
         public Game()
@@ -40,16 +40,16 @@ namespace BlackJackConsole
         {
             ShowAllCards(players);
 
-            int[] values = new int[players.Count];
+            int[] HandValues = new int[players.Count];
 
             for (int i = 0; i < players.Count; i++)
             {
-                values[i] = players[i].GetHandValue();
+                HandValues[i] = players[i].GetHandValue();
             }
 
-            for (int i = 1; i < values.Length; i++)
+            for (int i = 1; i < HandValues.Length; i++)
             {
-                if (values[i] > BlackJackValue)
+                if (HandValues[i] > blackJackValue)
                 {
                     Player current = players[i];
                     current.Bet = 0;
@@ -57,7 +57,7 @@ namespace BlackJackConsole
                     PrintPlayerStatus(players[i], PlayerStatus.Loose);
                 }
 
-                if (values[i] == BlackJackValue)
+                if (HandValues[i] == blackJackValue)
                 {
                     Player current = players[i];
                     current.Balance += current.Bet * 2;
@@ -66,7 +66,7 @@ namespace BlackJackConsole
                     PrintPlayerStatus(players[i], PlayerStatus.BlackJack);
                 }
 
-                if (values[i] == values[0] && values[i] < BlackJackValue && values[0] < BlackJackValue)
+                if (HandValues[i] == HandValues[0] && HandValues[i] < blackJackValue && HandValues[0] < blackJackValue)
                 {
                     Player current = players[i];
                     current.Balance += current.Bet;
@@ -75,7 +75,7 @@ namespace BlackJackConsole
                     PrintPlayerStatus(players[i], PlayerStatus.Draw);
                 }
 
-                if ((values[i] > values[0]) && (values[i] < BlackJackValue) && (values[0] < BlackJackValue))
+                if ((HandValues[i] > HandValues[0]) && (HandValues[i] < blackJackValue) && (HandValues[0] < blackJackValue))
                 {
                     Player current = players[i];
                     current.Balance += current.Bet * 2;
@@ -84,7 +84,7 @@ namespace BlackJackConsole
                     PrintPlayerStatus(players[i], PlayerStatus.Win);
                 }
 
-                if ((values[i] < values[0]) && (values[0] > BlackJackValue) && (values[i] < BlackJackValue))
+                if ((HandValues[i] < HandValues[0]) && (HandValues[0] > blackJackValue) && (HandValues[i] < blackJackValue))
                 {
                     Player current = players[i];
                     current.Balance += current.Bet * 2;
@@ -96,6 +96,8 @@ namespace BlackJackConsole
 
             ShowAllPlayers(players);
         }
+
+        
 
         public void PlayHand(List<Player> players)
         {
@@ -110,7 +112,7 @@ namespace BlackJackConsole
                 {
                     while (true)
                     {
-                        if (playersHandValue < BlackJackValue)
+                        if (playersHandValue < blackJackValue)
                         {
                             ShowAllCards(players);
                             Console.WriteLine($"{player.Name}, do you want to pick a card? (y/n)");
@@ -134,7 +136,7 @@ namespace BlackJackConsole
                             }
                         }
 
-                        if (playersHandValue >= BlackJackValue)
+                        if (playersHandValue >= blackJackValue)
                         {
                             break;
                         }
@@ -145,7 +147,7 @@ namespace BlackJackConsole
                 {
                     while (true)
                     {
-                        if (playersHandValue < BlackJackValue && playersHandValue < MaxDealersHandValue)
+                        if (playersHandValue < blackJackValue && playersHandValue < maxDealersHandValue)
                         {
                             player.Hand.AddRange(_deck.PopCards(1));
                             playersHandValue = player.GetHandValue();
