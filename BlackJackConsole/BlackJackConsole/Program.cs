@@ -166,12 +166,7 @@ namespace BlackJackConsole
                             }
                         }
 
-                        if (playersHandValue == 21)
-                        {
-                            break;
-                        }
-
-                        if (playersHandValue > 21)
+                        if (playersHandValue >= 21)
                         {
                             break;
                         }
