@@ -13,27 +13,6 @@ namespace BlackJackConsole
         public string Name { get; set; }
         public List<Card> Hand { get; set; }
 
-        private const int blackJackValue = 21;
-
-        public int GetHandValue()
-        {
-            int sum = 0;
-            foreach (Card card in Hand)
-            {
-                sum += card.Value;
-            }
-
-            foreach (Card card in Hand)
-            {
-                if (card.Name == CardNames.A && sum > blackJackValue)
-                {
-                    sum -= 10;
-                }
-            }
-
-            return sum;
-        }
-
         public Player(string name)
         {
             Name = name;

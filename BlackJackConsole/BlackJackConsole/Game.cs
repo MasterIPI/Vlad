@@ -21,6 +21,26 @@ namespace BlackJackConsole
             _deck = new Deck();
             _deck.Shuffle();
         }
+
+        public static int GetHandValue(Player player)
+        {
+            int sum = 0;
+            foreach (Card card in player.Hand)
+            {
+                sum += card.Value;
+            }
+
+            foreach (Card card in player.Hand)
+            {
+                if (card.Name == CardNames.A && sum > blackJackValue)
+                {
+                    sum -= 10;
+                }
+            }
+
+            return sum;
+        }
+
         public void PlayGame(int playerNum)
         {
             string answer = string.Empty;
@@ -44,7 +64,7 @@ namespace BlackJackConsole
 
             for (int i = 0; i < players.Count; i++)
             {
-                HandValues[i] = players[i].GetHandValue();
+                HandValues[i] = GetHandValue(players[i]);
             }
 
             for (int i = 1; i < HandValues.Length; i++)
@@ -106,7 +126,7 @@ namespace BlackJackConsole
 
             foreach (Player player in players)
             {
-                playersHandValue = player.GetHandValue();
+                playersHandValue = GetHandValue(player);
 
                 if (player.Name != "Dealer")
                 {
@@ -122,7 +142,7 @@ namespace BlackJackConsole
                             {
                                 player.Hand.AddRange(_deck.PopCards(1));
                                 ShowPlayersHand(player);
-                                playersHandValue = player.GetHandValue();
+                                playersHandValue = GetHandValue(player);
                             }
 
                             if (answer == "n")
@@ -150,7 +170,7 @@ namespace BlackJackConsole
                         if (playersHandValue < blackJackValue && playersHandValue < maxDealersHandValue)
                         {
                             player.Hand.AddRange(_deck.PopCards(1));
-                            playersHandValue = player.GetHandValue();
+                            playersHandValue = GetHandValue(player);
                         }
 
                         else

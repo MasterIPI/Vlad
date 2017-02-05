@@ -70,7 +70,7 @@ namespace BlackJackConsole
                 {
                     Console.WriteLine(string.Format($"{card.Name.ToString()}{GetSuit(card)}"));
                 }
-                Console.WriteLine($"Hand value: {player.GetHandValue()}");
+                Console.WriteLine($"Hand value: {Game.GetHandValue(player)}");
                 Console.WriteLine($"Your bet is {player.Bet}");
                 Console.WriteLine(new string('=', 10));
             }
@@ -81,7 +81,7 @@ namespace BlackJackConsole
                 {
                     Console.WriteLine(string.Format($"{card.Name.ToString()}{GetSuit(card)}"));
                 }
-                Console.WriteLine($"Hand value: {player.GetHandValue()}");
+                Console.WriteLine($"Hand value: {Game.GetHandValue(player)}");
                 Console.WriteLine(new string('=', 10));
             }
         }
