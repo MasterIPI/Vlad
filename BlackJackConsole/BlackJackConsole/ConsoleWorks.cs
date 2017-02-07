@@ -154,7 +154,7 @@ namespace BlackJackConsole
         {
             string answer = string.Empty;
 
-            while (answer != "y")
+            while (true)
             {
                 Console.WriteLine($"{player.Name}, do you want to pick a card? (y/n)");
                 answer = Console.ReadLine();
