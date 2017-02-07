@@ -16,9 +16,9 @@ namespace BlackJackConsole
             _deck = _deck.OrderBy(x => r.NextDouble()).ToList();
         }
 
-        public Card[] PopCards(int count)
+        public List<Card> PopCards(int count)
         {
-            Card[] tmp = _deck.Take(count).ToArray();
+            List<Card> tmp = _deck.Take(count).ToList();
             _deck = _deck.Except(tmp).ToList();
 
             return tmp;
@@ -26,34 +26,45 @@ namespace BlackJackConsole
 
         public void CreateDeck()
         {
-            for (int i = 0; i < Enum.GetNames(typeof(Suits)).Length; i++)
-            {
-                int card = (int)CardNames.Two;
-                int cardValue = card;
+            Card tmpcard = new Card();
 
-                for (int j = 0; j < Enum.GetNames(typeof(CardNames)).Length; j++, card++)
+            for (int suit = 0; suit < Enum.GetNames(typeof(CardSuit)).Length; suit++)
+            {
+                int cardValue = 2;
+
+                for (int cardName = 0; cardName < Enum.GetNames(typeof(CardName)).Length; cardName++)
                 {
-                    if (card <= (int)CardNames.Ten)
+                    if (cardName <= (int)CardName.Ten)
                     {
-                        _deck.Add(new Card((CardNames)card, (Suits)i, cardValue));
+                        tmpcard.Name = (CardName)cardName;
+                        tmpcard.Suit = (CardSuit)suit;
+                        tmpcard.Value = cardValue;
+
+                        _deck.Add(tmpcard);
                     }
 
-                    if (card > (int)CardNames.Ten)
+                    if (cardName > (int)CardName.Ten)
                     {
-                        for (; j < Enum.GetNames(typeof(CardNames)).Length; j++, card++)
+                        for (; cardName < Enum.GetNames(typeof(CardName)).Length; cardName++)
                         {
-                            if (card == (int)CardNames.A)
+                            tmpcard.Name = (CardName)cardName;
+                            tmpcard.Suit = (CardSuit)suit;
+
+
+                            if (cardName == (int)CardName.A)
                             {
                                 cardValue++;
-                                _deck.Add(new Card((CardNames)card, (Suits)i, cardValue));
+                                tmpcard.Value = cardValue;
+                                _deck.Add(tmpcard);
                                 break;
                             }
 
-                            _deck.Add(new Card((CardNames)card, (Suits)i, cardValue));
+                            tmpcard.Value = cardValue;
+                            _deck.Add(tmpcard);
                         }
                     }
 
-                    if (cardValue <= (int)CardNames.Nine)
+                    if (cardName <= (int)CardName.Nine)
                     {
                         cardValue++;
                     }

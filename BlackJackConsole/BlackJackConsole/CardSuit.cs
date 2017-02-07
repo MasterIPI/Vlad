@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace BlackJackConsole
 {
-    public enum Suits { Spades, Clubs, Hearts, Diamonds }
+    public enum CardSuit { Spades, Clubs, Hearts, Diamonds }
 
 }

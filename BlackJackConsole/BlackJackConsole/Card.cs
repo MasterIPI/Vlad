@@ -8,16 +8,9 @@ namespace BlackJackConsole
 {
     public struct Card
     {
-        public CardNames Name { get; set; }
-        public Suits Suit { get; set; }
+        public CardName Name { get; set; }
+        public CardSuit Suit { get; set; }
         public int Value { get; set; }
-
-        public Card(CardNames name, Suits suit, int val)
-        {
-            Name = name;
-            Suit = suit;
-            Value = val;
-        }
     }
 
 }

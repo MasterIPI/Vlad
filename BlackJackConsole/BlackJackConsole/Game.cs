@@ -32,7 +32,7 @@ namespace BlackJackConsole
 
             foreach (Card card in player.Hand)
             {
-                if (card.Name == CardNames.A && sum > blackJackValue)
+                if (card.Name == CardName.A && sum > blackJackValue)
                 {
                     sum -= 10;
                 }
@@ -53,21 +53,20 @@ namespace BlackJackConsole
             ShowAllCards(_players);
             PlayHand(_players);
             GetWinner(_players);
-            Console.ReadKey();
         }
 
         public void GetWinner(List<Player> players)
         {
             ShowAllCards(players);
 
-            int[] HandValues = new int[players.Count];
+            List<int> HandValues = new List<int>(players.Count);
 
             for (int i = 0; i < players.Count; i++)
             {
-                HandValues[i] = GetHandValue(players[i]);
+                HandValues.Add(GetHandValue(players[i]));
             }
 
-            for (int i = 1; i < HandValues.Length; i++)
+            for (int i = 1; i < HandValues.Count; i++)
             {
                 if (HandValues[i] > blackJackValue)
                 {
@@ -115,6 +114,7 @@ namespace BlackJackConsole
             }
 
             ShowAllPlayers(players);
+            WaitForExit();
         }
 
         
@@ -130,33 +130,20 @@ namespace BlackJackConsole
 
                 if (player.Name != "Dealer")
                 {
-                    while (true)
+                    while (playersHandValue < blackJackValue)
                     {
-                        if (playersHandValue < blackJackValue)
+                        ShowAllCards(players);
+
+                        answer = AskPlayerPickCard(player);
+
+                        if (answer == "y")
                         {
-                            ShowAllCards(players);
-                            Console.WriteLine($"{player.Name}, do you want to pick a card? (y/n)");
-                            answer = Console.ReadLine();
-
-                            if (answer == "y")
-                            {
-                                player.Hand.AddRange(_deck.PopCards(1));
-                                ShowPlayersHand(player);
-                                playersHandValue = GetHandValue(player);
-                            }
-
-                            if (answer == "n")
-                            {
-                                break;
-                            }
-
-                            else
-                            {
-                                Console.WriteLine("Please, type y or n!!!");
-                            }
+                            player.Hand.AddRange(_deck.PopCards(1));
+                            ShowPlayersHand(player);
+                            playersHandValue = GetHandValue(player);
                         }
 
-                        if (playersHandValue >= blackJackValue)
+                        if (answer == "n")
                         {
                             break;
                         }
@@ -165,18 +152,10 @@ namespace BlackJackConsole
 
                 else
                 {
-                    while (true)
+                    while (playersHandValue < blackJackValue && playersHandValue < maxDealersHandValue)
                     {
-                        if (playersHandValue < blackJackValue && playersHandValue < maxDealersHandValue)
-                        {
-                            player.Hand.AddRange(_deck.PopCards(1));
-                            playersHandValue = GetHandValue(player);
-                        }
-
-                        else
-                        {
-                            break;
-                        }
+                        player.Hand.AddRange(_deck.PopCards(1));
+                        playersHandValue = GetHandValue(player);
                     }
                 }
 

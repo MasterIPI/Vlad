@@ -150,29 +150,55 @@ namespace BlackJackConsole
             }
         }
 
+        public static string AskPlayerPickCard(Player player)
+        {
+            string answer = string.Empty;
+
+            while (answer != "y")
+            {
+                Console.WriteLine($"{player.Name}, do you want to pick a card? (y/n)");
+                answer = Console.ReadLine();
+
+                if (answer == "y" || answer == "n")
+                {
+                    break;
+                }
+
+                Console.WriteLine("Please, type y or n!!!");
+            }
+
+            return answer;
+        }
+
+        public static void WaitForExit()
+        {
+            Console.WriteLine("\nPress any key for exit");
+            Console.ReadKey();
+        }
+
         private static char GetSuit(Card card)
         {
             char _suit = ' ';
 
-            if (card.Suit == Suits.Clubs)
+            if (card.Suit == CardSuit.Clubs)
             {
                 _suit = '\u2663';
                 return _suit;
             }
 
-            if (card.Suit == Suits.Diamonds)
+            if (card.Suit == CardSuit.Diamonds)
             {
                 _suit = '\u2666';
                 return _suit;
             }
 
-            if (card.Suit == Suits.Hearts)
+            if (card.Suit == CardSuit.Hearts)
             {
                 _suit = '\u2665';
                 return _suit;
             }
 
-            if (card.Suit == Suits.Spades)
+            if (card.Suit == CardSuit.Spades)
             {
                 _suit = '\u2660';
                 return _suit;
